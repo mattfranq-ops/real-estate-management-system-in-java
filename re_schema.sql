@@ -6,7 +6,7 @@
 CREATE TABLE agents (
     agent_id SERIAL PRIMARY KEY, --Every agent will have a unique id
     agent_name VARCHAR(100) NOT NULL, --Every agent will have a name
-    agent_email VARCHAR(120) UNIQUE NOT NULL, --Every agent
+    agent_email VARCHAR(120) UNIQUE NOT NULL, --Every agent must have an emails
     agent_phone VARCHAR(20) UNIQUE, --Every agent will have a unique number
     agent_firm VARCHAR(100), --Every can work with a firm, self employed may also be an option
     agent_commission DECIMAL(5,2) --An agents commission
