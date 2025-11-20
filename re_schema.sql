@@ -42,20 +42,20 @@ CREATE TABLE properties(
 -- ==Offers==
 CREATE TABLE offers(
     offer_id SERIAL PRIMARY KEY,
-    property_id INT NOT NULL REFERENCES properties(property_listing) ON DELETE CASCADE,
-    client_id INT NOT NULL REFERENCES clients(client_id) ON DELETE CASCADE,
-    offer_amount DECIMAL(12,2) NOT NULL CHECK (offer_amount > 0),
-    offer_date DATE NOT NULL DEFAULT CURRENT_DATE,
-    offer_status VARCHAR(20) NOT NULL CHECK (offer_status in ('Submitted','Accepted','Rejected','Withdrawn','Countered'))
+    property_id INT NOT NULL REFERENCES properties(property_listing) ON DELETE CASCADE, -- Offer will be deleted if property is deleted
+    client_id INT NOT NULL REFERENCES clients(client_id) ON DELETE CASCADE, -- Offer will be deleted in client is delted
+    offer_amount DECIMAL(12,2) NOT NULL CHECK (offer_amount > 0), -- Offer amount
+    offer_date DATE NOT NULL DEFAULT CURRENT_DATE, -- Date of offer is listed as current date if not specified
+    offer_status VARCHAR(20) NOT NULL CHECK (offer_status in ('Submitted','Accepted','Rejected','Withdrawn','Countered')) -- Offer status
 );
 
 -- ==Previous Closings==
 CREATE TABLE closings(
     closing_id SERIAL PRIMARY KEY,
-    offer_id INT UNIQUE NOT NULL REFERENCES offers(offer_id) ON DELETE CASCADE,
-    closing_date DATE NOT NULL,
-    closing_sale_price DECIMAL(12,2) NOT NULL CHECK (closing_sale_price > 0),
-    mortgage_amount DECIMAL(12,2) NOT NULL CHECK (mortgage_amount > 0),
-    agent_commission DECIMAL(12,2) CHECK (agent_commission >= 0)
+    offer_id INT UNIQUE NOT NULL REFERENCES offers(offer_id) ON DELETE CASCADE, -- If offer is deleted, closing is deleted along with it
+    closing_date DATE NOT NULL, -- Date closing is listed for
+    closing_sale_price DECIMAL(12,2) NOT NULL CHECK (closing_sale_price > 0), -- Final price agreed upon for sale
+    mortgage_amount DECIMAL(12,2) NOT NULL CHECK (mortgage_amount > 0), -- Mortgage listed for closing
+    agent_commission DECIMAL(12,2) CHECK (agent_commission >= 0) -- Commission for agent
 );
 
