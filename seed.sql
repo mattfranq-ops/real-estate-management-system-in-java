@@ -43,8 +43,8 @@ VALUES -- Inserting values into the re_schema properties template
 
  -- == Offers ==
  
- INSERT INTO offers (property_id, client_id, offer_amount, offer_status) -- Inserting values into the re_schema offers template
- VALUES
+INSERT INTO offers (property_id, client_id, offer_amount, offer_status) -- Inserting values into the re_schema offers template
+VALUES
 (1, 1, 315000.00, 'Submitted'),
 (1, 4, 320000.00, 'Countered'),
 (2, 1, 245000.00, 'Accepted'),
