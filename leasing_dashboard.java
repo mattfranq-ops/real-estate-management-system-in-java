@@ -46,7 +46,7 @@ public class leasing_dashboard {
                     String pName = pRslt.getString("name");
                     double monthlyIncome = pRslt.getDouble("annual_income") / 12;
                     int credit = pRslt.getInt("credit_score");
-                    double rent = pRslt.getDouble("monthly_rent");
+                    double rent = pRslt.getDouble("monthly_rent"); 
 
                     //Decision maker
                     boolean incomePass = monthlyIncome >= (rent * 3);
