@@ -17,7 +17,7 @@ public class leasing_dashboard {
 
                 LocalDate today = LocalDate.now();
                 while (rslt.next()){
-                    String name = rslt.getString("Name");
+                    String name = rslt.getString("name");
                     String rentStatus = rslt.getString("rent_status");
                     LocalDate leaseEnd = rslt.getDate("lease_end").toLocalDate();
 
@@ -31,6 +31,31 @@ public class leasing_dashboard {
                     }
 
                     System.out.println(String.format("%-15s | %-10s | %-12d | %-15s", name, rentStatus, daysLeft, action));
+                }
+                System.out.println("\n[New Applicant Ready]");
+                System.out.println(String.format("%-15s | %-12s | %-8s | %-15s", "Prospect", "Mo Income", "Credit", "Decision"));
+
+                //Check to see if income qualifies prospect for unit
+                String prospectQuery = "select p.name, p.annual_income, p.credit_score, u.monthly_rent " +
+                                        "From prospects p " +
+                                        "JOIN units u ON p.unit_applying_for = u.unit_id";
+
+                ResultSet pRslt = stmt.executeQuery(prospectQuery);
+
+                while (pRslt.next()){
+                    String pName = pRslt.getString("name");
+                    double monthlyIncome = pRslt.getDouble("annual_income") / 12;
+                    int credit = pRslt.getInt("credit_score");
+                    double rent = pRslt.getDouble("monthly_rent");
+
+                    //Decision maker
+                    boolean incomePass = monthlyIncome >= (rent * 3);
+                    boolean creditPass = credit >= 600;
+
+                    String decision = (incomePass && creditPass) ? "APPROVED" : "DENIED";
+
+                    System.out.println(String.format("%-15s | $%-11.2f | %-8d | %-15s", pName, monthlyIncome, credit, decision));
+
                 }
             }catch (SQLException e){
                 System.err.println("Dashboard Err: " + e.getMessage());
