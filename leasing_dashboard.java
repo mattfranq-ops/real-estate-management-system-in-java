@@ -38,7 +38,11 @@ public class leasing_dashboard {
                 //Check to see if income qualifies prospect for unit
                 String prospectQuery = "select p.name, p.annual_income, p.credit_score, u.monthly_rent " +
                                         "From prospects p " +
+<<<<<<< HEAD
                                         "JOIN units u ON p.unit_applying_for = u.id";
+=======
+                                        "JOIN units u ON p.unit_applying_for = u.unit_id";
+>>>>>>> 8b5d362004329d858c6c80f55d866d5032d5181e
 
                 ResultSet pRslt = stmt.executeQuery(prospectQuery);
 
